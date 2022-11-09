@@ -24,8 +24,7 @@ class ShowCounter extends StatelessWidget {
         height: 50,
         width: MediaQuery.of(context).size.width * 0.4,
         color: counterBackGroundColor ?? Colors.grey.shade100,
-        child: Padding(
-          padding: const EdgeInsets.only(top: 6),
+        child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.center,

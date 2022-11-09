@@ -33,10 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Stack(
-          children: [
-            Padding(
+      body: Stack(
+        children: [
+          Container(
+            width: 350,
+            child: Padding(
               padding: const EdgeInsets.only(top: 140, left: 4, right: 4),
               child: Align(
                 alignment: Alignment.centerRight,
@@ -48,8 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

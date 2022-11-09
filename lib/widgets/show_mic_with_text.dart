@@ -51,23 +51,23 @@ class ShowMicWithText extends StatelessWidget {
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.easeIn,
-                  width: 50,
-                  height: 50,
-                  child: Container(
-                    color: (soundRecorderState.buttonPressed)
-                        ? backGroundColor ??
-                            Theme.of(context).colorScheme.secondary
-                        : Colors.transparent,
-                    child: Padding(
-                      padding: const EdgeInsets.all(4.0),
-                      child: recordIcon ??
-                          Icon(
-                            Icons.mic,
-                            size: 28,
-                            color: (soundRecorderState.buttonPressed)
-                                ? Colors.grey.shade200
-                                : Colors.black,
-                          ),
+                  child: Center(
+                    child: Container(
+                      color: (soundRecorderState.buttonPressed)
+                          ? backGroundColor ??
+                              Theme.of(context).colorScheme.secondary
+                          : Colors.transparent,
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: recordIcon ??
+                            Icon(
+                              Icons.access_alarm,
+                              size: 28,
+                              color: (soundRecorderState.buttonPressed)
+                                  ? Colors.amber.shade200
+                                  : Colors.black,
+                            ),
+                      ),
                     ),
                   ),
                 ),
