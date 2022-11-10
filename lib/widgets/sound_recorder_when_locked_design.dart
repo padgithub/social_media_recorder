@@ -94,6 +94,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                   onTap: () {
                     soundRecordNotifier.isShow = false;
                     soundRecordNotifier.resetEdgePadding();
+                    didSoundRecordNotifier(soundRecordNotifier);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
