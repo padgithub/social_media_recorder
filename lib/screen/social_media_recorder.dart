@@ -117,7 +117,9 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
           onHorizontalDragUpdate: (scrollEnd) {
             state.updateScrollValue(scrollEnd.globalPosition, context);
           },
-          onHorizontalDragEnd: (x) {},
+          onHorizontalDragEnd: (x) {
+            widget.didSoundRecordNotifier(state);
+          },
           child: Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.only(
