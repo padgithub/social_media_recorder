@@ -13,10 +13,9 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
   final Widget? recordIconWhenLockedRecord;
   final TextStyle? cancelTextStyle;
   final TextStyle? counterTextStyle;
-  final Color recordIconWhenLockBackGroundColor;
-  final Color? counterBackGroundColor;
-  final Color? cancelTextBackGroundColor;
+  final Color? bankgroundColor;
   final Widget? sendButtonIcon;
+  final Function(SoundRecordNotifier state) didSoundRecordNotifier;
   // ignore: sort_constructors_first
   const SoundRecorderWhenLockedDesign({
     Key? key,
@@ -27,9 +26,8 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     required this.recordIconWhenLockedRecord,
     required this.cancelTextStyle,
     required this.counterTextStyle,
-    required this.recordIconWhenLockBackGroundColor,
-    required this.counterBackGroundColor,
-    required this.cancelTextBackGroundColor,
+    required this.bankgroundColor,
+    required this.didSoundRecordNotifier,
   }) : super(key: key);
 
   @override
@@ -37,7 +35,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
     return Container(
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: cancelTextBackGroundColor ?? Colors.grey.shade100,
+        color: bankgroundColor,
         borderRadius: const BorderRadius.only(
           bottomRight: Radius.circular(24),
           topRight: Radius.circular(24),
@@ -47,6 +45,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
         onTap: () {
           soundRecordNotifier.isShow = false;
           soundRecordNotifier.resetEdgePadding();
+          didSoundRecordNotifier(soundRecordNotifier);
         },
         child: Row(
           children: [
@@ -60,6 +59,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                   sendRequestFunction(File.fromUri(Uri(path: path)));
                 }
                 soundRecordNotifier.resetEdgePadding();
+                didSoundRecordNotifier(soundRecordNotifier);
               },
               child: Transform.scale(
                 scale: 1.2,
@@ -71,7 +71,6 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
                     width: 50,
                     height: 50,
                     child: Container(
-                      color: recordIconWhenLockBackGroundColor,
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
                         child: recordIconWhenLockedRecord ??
@@ -113,7 +112,6 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
             ShowCounter(
               soundRecorderState: soundRecordNotifier,
               counterTextStyle: counterTextStyle,
-              counterBackGroundColor: counterBackGroundColor,
             ),
           ],
         ),

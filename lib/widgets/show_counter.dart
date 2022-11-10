@@ -7,13 +7,11 @@ import 'package:social_media_recorder/provider/sound_record_notifier.dart';
 class ShowCounter extends StatelessWidget {
   final SoundRecordNotifier soundRecorderState;
   final TextStyle? counterTextStyle;
-  final Color? counterBackGroundColor;
   // ignore: sort_constructors_first
   const ShowCounter({
     required this.soundRecorderState,
     Key? key,
     this.counterTextStyle,
-    required this.counterBackGroundColor,
   }) : super(key: key);
 
   @override
@@ -23,7 +21,6 @@ class ShowCounter extends StatelessWidget {
       child: Container(
         height: 50,
         width: MediaQuery.of(context).size.width * 0.4,
-        color: counterBackGroundColor ?? Colors.grey.shade100,
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

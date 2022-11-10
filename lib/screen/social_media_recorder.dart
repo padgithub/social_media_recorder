@@ -12,23 +12,15 @@ import 'package:social_media_recorder/widgets/sound_recorder_when_locked_design.
 import '../audio_encoder_type.dart';
 
 class SocialMediaRecorder extends StatefulWidget {
-  /// use it for change back ground of cancel
-  final Color? cancelTextBackGroundColor;
-
   /// function reture the recording sound file
   final Function(File soundFile) sendRequestFunction;
+  final Function(SoundRecordNotifier state) didSoundRecordNotifier;
 
   /// recording Icon That pressesd to start record
   final Widget? recordIcon;
 
   /// recording Icon when user locked the record
   final Widget? recordIconWhenLockedRecord;
-
-  /// use to change the backGround Icon when user recording sound
-  final Color? recordIconBackGroundColor;
-
-  /// use to change the Icon backGround color when user locked the record
-  final Color? recordIconWhenLockBackGroundColor;
 
   /// use to change all recording widget color
   final Color? backGroundColor;
@@ -57,9 +49,6 @@ class SocialMediaRecorder extends StatefulWidget {
   /// use if you want change the raduis of un record
   final BorderRadius? radius;
 
-  // use to change the counter back ground color
-  final Color? counterBackGroundColor;
-
   // use to change lock icon to design you need it
   final Widget? lockButton;
   // use it to change send button when user lock the record
@@ -72,10 +61,6 @@ class SocialMediaRecorder extends StatefulWidget {
     required this.sendRequestFunction,
     this.recordIcon,
     this.lockButton,
-    this.counterBackGroundColor,
-    this.recordIconWhenLockedRecord,
-    this.recordIconBackGroundColor = Colors.blue,
-    this.recordIconWhenLockBackGroundColor = Colors.blue,
     this.backGroundColor,
     this.cancelTextStyle,
     this.counterTextStyle,
@@ -83,9 +68,10 @@ class SocialMediaRecorder extends StatefulWidget {
     this.slideToCancelText = " Slide to Cancel >",
     this.cancelText = "Cancel",
     this.encode = AudioEncoderType.AAC,
-    this.cancelTextBackGroundColor,
     this.radius,
     Key? key,
+    this.recordIconWhenLockedRecord,
+    required this.didSoundRecordNotifier,
   }) : super(key: key);
 
   @override
@@ -150,16 +136,14 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
     if (state.lockScreenRecord == true) {
       return SoundRecorderWhenLockedDesign(
         cancelText: widget.cancelText,
+        bankgroundColor: widget.backGroundColor,
         sendButtonIcon: widget.sendButtonIcon,
-        cancelTextBackGroundColor: widget.cancelTextBackGroundColor,
         cancelTextStyle: widget.cancelTextStyle,
-        counterBackGroundColor: widget.counterBackGroundColor,
-        recordIconWhenLockBackGroundColor:
-            widget.recordIconWhenLockBackGroundColor ?? Colors.blue,
-        counterTextStyle: widget.counterTextStyle,
         recordIconWhenLockedRecord: widget.recordIconWhenLockedRecord,
         sendRequestFunction: widget.sendRequestFunction,
         soundRecordNotifier: state,
+        counterTextStyle: widget.cancelTextStyle,
+        didSoundRecordNotifier: widget.didSoundRecordNotifier,
       );
     }
 
@@ -170,6 +154,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
 
         soundRecordNotifier.isShow = true;
         state.record();
+        widget.didSoundRecordNotifier(state);
       },
       onPointerUp: (details) async {
         if (!state.isLocked) {
@@ -205,18 +190,16 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
                 child: Stack(
                   children: [
                     ShowMicWithText(
-                      counterBackGroundColor: widget.counterBackGroundColor,
-                      backGroundColor: widget.recordIconBackGroundColor,
                       recordIcon: widget.recordIcon,
                       shouldShowText: soundRecordNotifier.isShow,
                       soundRecorderState: state,
                       slideToCancelTextStyle: widget.slideToCancelTextStyle,
                       slideToCancelText: widget.slideToCancelText,
+                      backGroundColor: widget.backGroundColor,
+                      didSoundRecordNotifier: widget.didSoundRecordNotifier,
                     ),
                     if (soundRecordNotifier.isShow)
-                      ShowCounter(
-                          counterBackGroundColor: widget.counterBackGroundColor,
-                          soundRecorderState: state),
+                      ShowCounter(soundRecorderState: state),
                   ],
                 ),
               ),

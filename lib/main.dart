@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:social_media_recorder/audio_encoder_type.dart';
 import 'package:social_media_recorder/screen/social_media_recorder.dart';
@@ -42,8 +44,12 @@ class _MyHomePageState extends State<MyHomePage> {
               sendRequestFunction: (soundFile) {
                 // print("the current path is ${soundFile.path}");
               },
+              didSoundRecordNotifier: ((state) {
+                log(state.mPath);
+              }),
+              backGroundColor: Colors.blueAccent,
               encode: AudioEncoderType.AAC,
-              
+              radius: BorderRadius.circular(20),
             ),
           ),
         ),
