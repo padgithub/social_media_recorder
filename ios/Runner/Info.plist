@@ -45,5 +45,7 @@
 	<true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>We require microphone access to connect to a call</string>
 </dict>
 </plist>

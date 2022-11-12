@@ -160,13 +160,14 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
       },
       onPointerUp: (details) async {
         if (!state.isLocked) {
+          await state.stopRecorder();
           if (state.buttonPressed) {
             if (state.second > 1 || state.minute > 0) {
               String path = state.mPath;
               widget.sendRequestFunction(File.fromUri(Uri(path: path)));
             }
           }
-          state.resetEdgePadding();
+          await state.resetEdgePadding();
         }
       },
       child: AnimatedContainer(

@@ -23,7 +23,7 @@ class SoundRecordNotifier extends ChangeNotifier {
   String initialStorePathRecord = "";
 
   /// recording mp3 sound Object
-  Record recordMp3 = Record();
+  Record _audioRecorder = Record();
 
   /// recording mp3 sound to check if all permisiion passed
   bool _isAcceptedPermission = false;
@@ -86,6 +86,11 @@ class SoundRecordNotifier extends ChangeNotifier {
   }
 
   /// used to reset all value to initial value when end the record
+  stopRecorder() async {
+    mPath = await _audioRecorder.stop() ?? "";
+    print("pathhh: hot" + mPath);
+  }
+
   resetEdgePadding() async {
     isLocked = false;
     edge = 0;
@@ -98,43 +103,8 @@ class SoundRecordNotifier extends ChangeNotifier {
     lockScreenRecord = false;
     if (_timer != null) _timer!.cancel();
     if (_timerCounter != null) _timerCounter!.cancel();
-    recordMp3.stop();
+    stopRecorder();
     notifyListeners();
-  }
-
-  String _getSoundExtention() {
-    if (encode == AudioEncoderType.AAC ||
-        encode == AudioEncoderType.AAC_LD ||
-        encode == AudioEncoderType.AAC_HE ||
-        encode == AudioEncoderType.OPUS) {
-      return ".m4a";
-    } else {
-      return ".3gp";
-    }
-  }
-
-  /// used to get the current store path
-  Future<String> getFilePath() async {
-    String _sdPath = "";
-    if (Platform.isIOS) {
-      Directory tempDir = await getTemporaryDirectory();
-      _sdPath = initialStorePathRecord.isEmpty
-          ? tempDir.path
-          : initialStorePathRecord;
-    } else {
-      _sdPath = initialStorePathRecord.isEmpty
-          ? "/storage/emulated/0/new_record_sound"
-          : initialStorePathRecord;
-    }
-    var d = Directory(_sdPath);
-    if (!d.existsSync()) {
-      d.createSync(recursive: true);
-    }
-    var uuid = const Uuid();
-    String uid = uuid.v1();
-    String storagePath = _sdPath + "/" + uid + _getSoundExtention();
-    mPath = storagePath;
-    return storagePath;
   }
 
   /// used to change the draggable to top value
@@ -224,10 +194,11 @@ class SoundRecordNotifier extends ChangeNotifier {
       _isAcceptedPermission = true;
     } else {
       buttonPressed = true;
-      String recordFilePath = await getFilePath();
-      _timer = Timer(const Duration(milliseconds: 900), () {
-        recordMp3.start(path: recordFilePath);
-      });
+      // _timer = Timer(const Duration(milliseconds: 900), () {
+
+      // });
+      _start();
+      // _audioRecorder.start(path: recordFilePath);
       _mapCounterGenerater();
       notifyListeners();
     }
@@ -245,6 +216,23 @@ class SoundRecordNotifier extends ChangeNotifier {
       if (result.isGranted) {
         _isAcceptedPermission = true;
       }
+    }
+  }
+
+  Future<void> _start() async {
+    try {
+      if (await _audioRecorder.hasPermission()) {
+        // We don't do anything with this but printing
+        final isSupported = await _audioRecorder.isEncoderSupported(
+          AudioEncoder.aacLc,
+        );
+        print('${AudioEncoder.aacLc.name} supported: $isSupported');
+        // final devs = await _audioRecorder.listInputDevices();
+        // final isRecording = await _audioRecorder.isRecording();
+        await _audioRecorder.start();
+      }
+    } catch (e) {
+      print(e);
     }
   }
 }
