@@ -44,6 +44,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
       child: InkWell(
         onTap: () {
           soundRecordNotifier.isShow = false;
+          soundRecordNotifier.stopRecorder();
           soundRecordNotifier.resetEdgePadding();
           didSoundRecordNotifier(soundRecordNotifier);
         },
@@ -94,6 +95,7 @@ class SoundRecorderWhenLockedDesign extends StatelessWidget {
               child: InkWell(
                   onTap: () {
                     soundRecordNotifier.isShow = false;
+                    soundRecordNotifier.stopRecorder();
                     soundRecordNotifier.resetEdgePadding();
                     didSoundRecordNotifier(soundRecordNotifier);
                   },

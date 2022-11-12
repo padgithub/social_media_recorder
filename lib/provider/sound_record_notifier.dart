@@ -88,7 +88,6 @@ class SoundRecordNotifier extends ChangeNotifier {
   /// used to reset all value to initial value when end the record
   stopRecorder() async {
     mPath = await _audioRecorder.stop() ?? "";
-    print("pathhh: hot" + mPath);
   }
 
   resetEdgePadding() async {
@@ -103,7 +102,6 @@ class SoundRecordNotifier extends ChangeNotifier {
     lockScreenRecord = false;
     if (_timer != null) _timer!.cancel();
     if (_timerCounter != null) _timerCounter!.cancel();
-    stopRecorder();
     notifyListeners();
   }
 
@@ -141,6 +139,7 @@ class SoundRecordNotifier extends ChangeNotifier {
         RenderBox box = key.currentContext?.findRenderObject() as RenderBox;
         Offset position = box.localToGlobal(Offset.zero);
         if (position.dx <= MediaQuery.of(context).size.width * 0.6) {
+          await stopRecorder();
           resetEdgePadding();
         } else if (x.dx >= MediaQuery.of(context).size.width) {
           edge = 0;

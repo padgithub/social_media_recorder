@@ -48,9 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     print("the current path is ${soundFile.path}");
                   },
                   encode: AudioEncoderType.AAC,
-                  didSoundRecordNotifier: ((state) {
-                    log(state.mPath.toString());
-                  }),
+                  didSoundRecordNotifier: ((state) {}),
                 ),
               ),
             ),
