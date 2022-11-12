@@ -193,10 +193,9 @@ class SoundRecordNotifier extends ChangeNotifier {
       _isAcceptedPermission = true;
     } else {
       buttonPressed = true;
-      // _timer = Timer(const Duration(milliseconds: 900), () {
-
-      // });
-      _start();
+      _timer = Timer(const Duration(milliseconds: 900), () {
+        _start();
+      });
       // _audioRecorder.start(path: recordFilePath);
       _mapCounterGenerater();
       notifyListeners();
