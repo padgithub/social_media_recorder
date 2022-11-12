@@ -46,8 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
             alignment: Alignment.centerRight,
             child: SocialMediaRecorder(
               sendRequestFunction: (soundFile) {
-                log("the current path is ${soundFile.path}");
-                AudioPlayer().play(DeviceFileSource(soundFile.path));
+                log("the current path is ${soundFile}");
+                AudioPlayer().play(DeviceFileSource(soundFile));
               },
               didSoundRecordNotifier: ((state) {
                 log(state.mPath);

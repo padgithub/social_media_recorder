@@ -13,7 +13,7 @@ import '../audio_encoder_type.dart';
 
 class SocialMediaRecorder extends StatefulWidget {
   /// function reture the recording sound file
-  final Function(File soundFile) sendRequestFunction;
+  final Function(String path) sendRequestFunction;
   final Function(SoundRecordNotifier state) didSoundRecordNotifier;
 
   /// recording Icon That pressesd to start record
@@ -164,7 +164,7 @@ class _SocialMediaRecorder extends State<SocialMediaRecorder> {
           if (state.buttonPressed) {
             if (state.second > 1 || state.minute > 0) {
               String path = state.mPath;
-              widget.sendRequestFunction(File.fromUri(Uri(path: path)));
+              widget.sendRequestFunction(path);
             }
           }
           await state.resetEdgePadding();
